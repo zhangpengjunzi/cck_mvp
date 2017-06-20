@@ -2,13 +2,13 @@ package com.sinocall.guess.api;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinocall.guess.app.GuessApplication;
-import com.sinocall.guess.utils.SPUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
+ *
  * Created by Administrator on 2017/6/16.
  */
 
@@ -101,19 +102,19 @@ public class RetrofitClient {
         heads.put("ver", DeviceUtils.ver);
         heads.put("r", DeviceUtils.r);
         heads.put("channelid",DeviceUtils.channelId);
-        if ((Integer) SPUtils.get(GuessApplication.getApplication(), "userId", 0) != 0) {
-            heads.put("userId", "" + SPUtils.get(GuessApplication.getApplication(), "userId", 0));
+        if ((Integer)GuessApplication.getCache().getAsObject("userId") != 0) {
+            heads.put("userId", "" + GuessApplication.getCache().getAsObject("userId"));
         } else {
             heads.put("userId", 0 + "");
         }
-        if (!SPUtils.get(GuessApplication.getApplication(), "lId", "").equals("")) {
-            heads.put("lId", SPUtils.get(GuessApplication.getApplication(), "lId", "").toString());
+        if (!TextUtils.isEmpty(GuessApplication.getCache().getAsString("lId"))) {
+            heads.put("lId", GuessApplication.getCache().getAsString("lId"));
         } else {
             heads.put("lId", "");
         }
         heads.put("brand", DeviceUtils.brand);
-        if ((Integer) SPUtils.get(GuessApplication.getApplication(), "platform", 0) != 0) {
-            heads.put("platform", "" + SPUtils.get(GuessApplication.getApplication(), "platform", 0));
+        if ((Integer)GuessApplication.getCache().getAsObject("platform") != 0) {
+            heads.put("platform", "" + GuessApplication.getCache().getAsObject("platform"));
         } else {
             heads.put("platform", "" + 0);
         }

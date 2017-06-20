@@ -3,6 +3,8 @@ package com.sinocall.guess.app;
 import android.app.Application;
 import android.content.res.Resources;
 
+import com.sinocall.guess.utils.ACache;
+
 /**
  * Created by Administrator on 2017/6/19.
  */
@@ -23,5 +25,9 @@ public class GuessApplication extends Application {
 
     public static Resources getAppResources(){
         return application.getResources();
+    }
+
+    public static ACache getCache(){
+        return ACache.get(application);
     }
 }
