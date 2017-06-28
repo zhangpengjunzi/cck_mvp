@@ -3,4 +3,36 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="transpent">#00000000</color>
+    <!--侧滑-->
+    <color name="slide_red">#Fd6049</color>
+    <color name="slide_bg">#E8E8E8</color>
+    <!--登录-->
+    <color name="login_btn">#323232</color>
+    <!--支付-->
+    <color name="actionbar_color">#8B1A1A</color>
+
+    <color name="bottom_line_color">#e5e5e5</color>
+    <color name="shadow">#25808080</color>
+    <color name="hint">#cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="none_settings">#BDBDBD</color>
+    <color name="main_com_num">#666666</color>
+    <color name="main_color">#f7f7f7</color>
+    <color name="start_page">#FF0000</color>
+
+    <color name="tag_tuijian">#fdeae5</color>
+    <color name="tag_tuijian_border">#fbd2c6</color>
+    <color name="tag_big">#eaf2f8</color>
+    <color name="tag_big_border">#d2e2f0</color>
+    <color name="tag_much">#f4f4f4</color>
+    <color name="lucky_red">#ee5252</color>
+    <color name="lucky_blue">#78c0fa</color>
+
+    <color name="welfare_details_bg">#ffec7c</color>
+    <color name="welfare_button">#ec304d</color>
+    <color name="half_transparent">#e0000000</color>
+    <color name="new_guide">#ffd400</color>
 </resources>
+

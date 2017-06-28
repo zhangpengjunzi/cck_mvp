@@ -9,9 +9,13 @@ import android.util.SparseArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinocall.guess.app.GuessApplication;
+import com.sinocall.guess.security.MD5Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -83,6 +87,41 @@ public class RetrofitClient {
             clientManager.put(baseType,client);
         }
         return retrofit.create(tClass);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static ArrayMap getParamMap(ArrayMap<String,String> map){
+        if(map==null){
+            map=new ArrayMap<>();
+        }
+        map.put("v", DeviceUtils.v);
+        long currentTime = System.currentTimeMillis();
+        map.put("t", "" + currentTime);
+        map.put("s", getMD5(map));
+        return map;
+    }
+
+    private static String getMD5(ArrayMap<String,String> params) {
+        if (params == null || params.size() == 0) {
+            return null;
+        }
+        List<String> keys = new ArrayList<>();
+        for (String key : params.keySet()) {
+            keys.add(key);
+        }
+        Collections.sort(keys);
+        StringBuilder sb = new StringBuilder();
+        int size = 0;
+        for (String key : keys) {
+            if (!key.equals("s")) {
+                sb.append(key).append("=").append(params.get(key)).append('&');
+                size++;
+            }
+        }
+        sb.append("xxxwwwa8");
+        sb.append("=");
+        sb.append(200 + size);
+        return MD5Utils.hexdigest(sb.toString());
     }
 
     //请求头添加
