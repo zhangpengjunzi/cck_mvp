@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.SparseArray;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinocall.guess.app.GuessApplication;
 import com.sinocall.guess.security.MD5Utils;
@@ -71,10 +70,9 @@ public class RetrofitClient {
                 .cache(cache)
                 .build();
 
-        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         retrofit=new Retrofit.Builder()
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(GuessHostType.getBase_Url(baseType))
                 .build();
@@ -141,10 +139,10 @@ public class RetrofitClient {
         heads.put("ver", DeviceUtils.ver);
         heads.put("r", DeviceUtils.r);
         heads.put("channelid",DeviceUtils.channelId);
-        if ((Integer)GuessApplication.getCache().getAsObject("userId") != 0) {
-            heads.put("userId", "" + GuessApplication.getCache().getAsObject("userId"));
+        if (GuessApplication.getCache().getAsObject("userId") !=null) {
+            heads.put("userId",String.valueOf( GuessApplication.getCache().getAsObject("userId")));
         } else {
-            heads.put("userId", 0 + "");
+            heads.put("userId",String.valueOf(0));
         }
         if (!TextUtils.isEmpty(GuessApplication.getCache().getAsString("lId"))) {
             heads.put("lId", GuessApplication.getCache().getAsString("lId"));
@@ -152,10 +150,10 @@ public class RetrofitClient {
             heads.put("lId", "");
         }
         heads.put("brand", DeviceUtils.brand);
-        if ((Integer)GuessApplication.getCache().getAsObject("platform") != 0) {
-            heads.put("platform", "" + GuessApplication.getCache().getAsObject("platform"));
+        if (GuessApplication.getCache().getAsObject("platform") != null) {
+            heads.put("platform",String.valueOf(GuessApplication.getCache().getAsObject("platform")));
         } else {
-            heads.put("platform", "" + 0);
+            heads.put("platform", String.valueOf(0));
         }
         return heads;
     }

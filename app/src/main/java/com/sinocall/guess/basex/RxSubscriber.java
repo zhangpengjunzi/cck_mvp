@@ -1,6 +1,7 @@
 package com.sinocall.guess.basex;
 
 import android.content.Context;
+import android.util.Log;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -32,6 +33,7 @@ public abstract class RxSubscriber<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         String info=e.getLocalizedMessage();
+        Log.e("Error_CCKMVP","Error="+info);
         if(info.toLowerCase().contains("connecttimeoutexception") || info.toLowerCase().contains("sockettimeoutexception")||info.contains("after 10000ms")){
             _onError("网络请求超时！请检查您的网络设置");
         }else if(info.contains("HttpHostConnectException")||info.contains("No address associated")||info.contains("Not Found")){

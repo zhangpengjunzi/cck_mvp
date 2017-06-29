@@ -10,7 +10,7 @@ public class GuessHostType {
     private static final String Base_Url="http://www.qmguest.com/api/";
 
     public static  String getBase_Url(int hostType){
-        String url=null;
+        String url="";
         switch (hostType){
             case 1:
                 url=Base_Url;

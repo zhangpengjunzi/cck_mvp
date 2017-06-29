@@ -4,14 +4,15 @@ package com.sinocall.guess.ui.login.presenter;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.ArrayMap;
+import android.widget.Toast;
 
 import com.sinocall.guess.api.RetrofitClient;
-import com.sinocall.guess.basex.RxSubscriber;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 import com.sinocall.guess.utils.RegexUtil;
 
 import java.io.IOException;
 
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -49,19 +50,30 @@ public class GuessLoginPresenter extends GuessLoginContract.Presenter {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<ResponseBody>(mContext) {
+                .subscribe(new Observer<ResponseBody>() {
                     @Override
-                    protected void _onNext(ResponseBody requestBody) {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody value) {
                         try {
-                            String result=requestBody.string();
+                            String body=value.string();
+                            body="123";
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
 
                     @Override
-                    protected void _onError(String message) {
-                        mView.showErrorTip(message);
+                    public void onError(Throwable e) {
+                        String error=e.getLocalizedMessage();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(mContext,"完成",Toast.LENGTH_SHORT).show();
                     }
                 });
     }
