@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import com.sinocall.guess.api.GuessHostType;
 import com.sinocall.guess.api.RetrofitClient;
 import com.sinocall.guess.api.api_service.GuessLoginApi;
+import com.sinocall.guess.base.BaseBean;
 import com.sinocall.guess.basex.RxSchedulers;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 
@@ -17,8 +18,8 @@ import okhttp3.ResponseBody;
 
 public class GuessLoginModel implements GuessLoginContract.Model {
     @Override
-    public Observable<ResponseBody> sendCode(ArrayMap<String,String> map) {
-        return RetrofitClient.create(GuessLoginApi.class, GuessHostType.Guess_Base).getMessage(map).compose(RxSchedulers.<ResponseBody>io_main());
+    public Observable<BaseBean> sendCode(ArrayMap<String,String> map) {
+        return RetrofitClient.create(GuessLoginApi.class, GuessHostType.Guess_Base).getMessage(map).compose(RxSchedulers.<BaseBean>io_main());
     }
 
     @Override

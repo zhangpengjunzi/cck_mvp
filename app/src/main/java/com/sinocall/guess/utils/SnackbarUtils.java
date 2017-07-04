@@ -773,4 +773,28 @@ public class SnackbarUtils {
             Log.e("Jet","已经被回收");
         }
     }
+
+    public static final int SNACK_TYPE_CONFIM=1;
+    public static final int SNACK_TYPE_INFO=2;
+    public static final int SNACK_TYPE_ERROR=3;
+
+    public static void showMyStyle(View view,String msg,int type){
+        switch (type){
+            case SNACK_TYPE_CONFIM:
+                Short(view,msg).gravityFrameLayout(Gravity.CENTER)
+                        .confirm()
+                        .gravityFrameLayout(Gravity.CENTER).show();
+                break;
+            case SNACK_TYPE_INFO:
+                Short(view,msg).gravityFrameLayout(Gravity.CENTER)
+                        .info()
+                        .gravityFrameLayout(Gravity.CENTER).show();
+                break;
+            case SNACK_TYPE_ERROR:
+                Short(view,msg).gravityFrameLayout(Gravity.CENTER)
+                        .danger()
+                        .gravityFrameLayout(Gravity.CENTER).show();
+                break;
+        }
+    }
 }

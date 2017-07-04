@@ -52,7 +52,7 @@ public class RetrofitClient {
         Interceptor headerInterceptor=new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request.Builder builder=new Request.Builder();
+                Request.Builder builder=chain.request().newBuilder();
                 Set<String> keySet=addHeads().keySet();
                 for(String key:keySet){
                     builder.addHeader(key,addHeads().get(key)).build();

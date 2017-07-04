@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.sinocall.guess.R;
 import com.sinocall.guess.base.BaseActivity;
+import com.sinocall.guess.base.BaseBean;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 import com.sinocall.guess.ui.login.model.GuessLoginModel;
 import com.sinocall.guess.ui.login.presenter.GuessLoginPresenter;
@@ -18,7 +19,6 @@ import com.zhy.android.percent.support.PercentLinearLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.RequestBody;
 
 
 /**
@@ -101,12 +101,11 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
     }
 
     @Override
-    public void showErrorTip(String msg) {
-
+    public void showTip(String msg) {
     }
 
     @Override
-    public void receiveCodeData(RequestBody requestBody) {
-
+    public void receiveCodeData(BaseBean baseBean) {
+        if(){}
     }
 }

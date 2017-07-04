@@ -4,19 +4,16 @@ package com.sinocall.guess.ui.login.presenter;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.ArrayMap;
-import android.widget.Toast;
 
 import com.sinocall.guess.api.RetrofitClient;
+import com.sinocall.guess.base.BaseBean;
+import com.sinocall.guess.basex.RxSubscriber;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 import com.sinocall.guess.utils.RegexUtil;
 
-import java.io.IOException;
-
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import okhttp3.ResponseBody;
 
 
 /**
@@ -35,7 +32,7 @@ public class GuessLoginPresenter extends GuessLoginContract.Presenter {
     public void sendCode(String mobile,int type) {
         //判断手机是否可用
         if(!RegexUtil.checkPhone(mobile)){
-            mView.showErrorTip("手机格式不正确");
+            mView.showTip("手机格式不正确");
             return;
         }
         //发送验证码
@@ -46,34 +43,19 @@ public class GuessLoginPresenter extends GuessLoginContract.Presenter {
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        mView.showLoading("正在加载");//准备工作
+                        mView.showLoading("正在加载");
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
+                .subscribe(new RxSubscriber<BaseBean>(mContext) {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void _onNext(BaseBean baseBean) {
+                        mView.receiveCodeData(baseBean);
                     }
 
                     @Override
-                    public void onNext(ResponseBody value) {
-                        try {
-                            String body=value.string();
-                            body="123";
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        String error=e.getLocalizedMessage();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Toast.makeText(mContext,"完成",Toast.LENGTH_SHORT).show();
+                    protected void _onError(String message) {
+                        mView.showTip(message);
                     }
                 });
     }
