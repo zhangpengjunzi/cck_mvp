@@ -14,6 +14,7 @@ import com.sinocall.guess.base.BaseBean;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 import com.sinocall.guess.ui.login.model.GuessLoginModel;
 import com.sinocall.guess.ui.login.presenter.GuessLoginPresenter;
+import com.sinocall.guess.utils.SnackbarUtils;
 import com.sinocall.guess.widget.MyEditText;
 import com.zhy.android.percent.support.PercentLinearLayout;
 
@@ -106,6 +107,12 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
 
     @Override
     public void receiveCodeData(BaseBean baseBean) {
-        if(){}
+        if(baseBean.getErrorVo().getCode()==1000){
+            //发送成功
+            SnackbarUtils.showMyStyle(sendCode,baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_INFO);
+        }else{
+            //请求成功，发送失败
+            SnackbarUtils.showMyStyle(sendCode,baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_ERROR);
+        }
     }
 }
