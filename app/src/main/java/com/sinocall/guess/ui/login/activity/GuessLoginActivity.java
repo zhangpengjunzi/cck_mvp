@@ -1,6 +1,7 @@
 package com.sinocall.guess.ui.login.activity;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sinocall.guess.R;
+import com.sinocall.guess.app.GuessApplication;
 import com.sinocall.guess.base.BaseActivity;
 import com.sinocall.guess.base.BaseBean;
+import com.sinocall.guess.dialog.GuessLoadingDialog;
+import com.sinocall.guess.ui.login.bean.GuessLoginBean;
 import com.sinocall.guess.ui.login.contract.GuessLoginContract;
 import com.sinocall.guess.ui.login.model.GuessLoginModel;
 import com.sinocall.guess.ui.login.presenter.GuessLoginPresenter;
+import com.sinocall.guess.ui.main.activity.MainActivity;
+import com.sinocall.guess.utils.ACache;
 import com.sinocall.guess.utils.SnackbarUtils;
 import com.sinocall.guess.widget.MyEditText;
 import com.zhy.android.percent.support.PercentLinearLayout;
@@ -53,6 +59,7 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        SnackbarUtils.showMyStyle(loginBtn,GuessApplication.getCache().getAsString("platform"),SnackbarUtils.SNACK_TYPE_CONFIM);
     }
 
     @Override
@@ -76,6 +83,7 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_btn:
+                mPresenter.login(userPhone.getText().toString(),userCode.getText().toString());
                 break;
             case R.id.sino_login:
                 break;
@@ -93,7 +101,7 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
 
     @Override
     public void showLoading(String title) {
-
+        GuessLoadingDialog.showLoadingDialog(title,this);
     }
 
     @Override
@@ -102,17 +110,38 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
     }
 
     @Override
-    public void showTip(String msg) {
+    public void showTip(String msg,int type) {
+        SnackbarUtils.showMyStyle(sendCode,msg,type);
     }
 
     @Override
     public void receiveCodeData(BaseBean baseBean) {
         if(baseBean.getErrorVo().getCode()==1000){
             //发送成功
-            SnackbarUtils.showMyStyle(sendCode,baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_INFO);
+            showTip(baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_CONFIM);
         }else{
             //请求成功，发送失败
-            SnackbarUtils.showMyStyle(sendCode,baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_ERROR);
+            showTip(baseBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_ERROR);
         }
+    }
+
+    @Override
+    public void login(GuessLoginBean loginBean) {
+        if(loginBean.getErrorVo().getCode()==1000){
+            //登录成功
+            ACache.get(this).put("user_info",loginBean);
+            //平台
+            GuessApplication.getCache().put("platform",String.valueOf(0));
+            //跳转到MainActivity
+            startActivity(new Intent(this, MainActivity.class));
+            this.finish();
+        }else{
+            showTip(loginBean.getErrorVo().getMsg(),SnackbarUtils.SNACK_TYPE_ERROR);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -2,13 +2,13 @@ package com.sinocall.guess.api;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.SparseArray;
 
 import com.google.gson.GsonBuilder;
 import com.sinocall.guess.app.GuessApplication;
 import com.sinocall.guess.security.MD5Utils;
+import com.sinocall.guess.ui.login.bean.GuessLoginBean;
 
 import java.io.File;
 import java.io.IOException;
@@ -139,20 +139,15 @@ public class RetrofitClient {
         heads.put("ver", DeviceUtils.ver);
         heads.put("r", DeviceUtils.r);
         heads.put("channelid",DeviceUtils.channelId);
-        if (GuessApplication.getCache().getAsObject("userId") !=null) {
-            heads.put("userId",String.valueOf( GuessApplication.getCache().getAsObject("userId")));
+        heads.put("brand", DeviceUtils.brand);
+        GuessLoginBean loginBean= (GuessLoginBean) GuessApplication.getCache().getAsObject("user_info");
+        if (loginBean !=null) {
+            heads.put("userId",String.valueOf(loginBean.getData().getUserId()));
+            heads.put("lId", loginBean.getData().getLId());
+            heads.put("platform",GuessApplication.getCache().getAsString("platform"));
         } else {
             heads.put("userId",String.valueOf(0));
-        }
-        if (!TextUtils.isEmpty(GuessApplication.getCache().getAsString("lId"))) {
-            heads.put("lId", GuessApplication.getCache().getAsString("lId"));
-        } else {
             heads.put("lId", "");
-        }
-        heads.put("brand", DeviceUtils.brand);
-        if (GuessApplication.getCache().getAsObject("platform") != null) {
-            heads.put("platform",String.valueOf(GuessApplication.getCache().getAsObject("platform")));
-        } else {
             heads.put("platform", String.valueOf(0));
         }
         return heads;

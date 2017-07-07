@@ -8,5 +8,5 @@ public interface BaseView {
     /*内嵌加载*/
     void showLoading(String title);
     void stopLoading();
-    void showTip(String msg);
+    void showTip(String msg,int type);
 }

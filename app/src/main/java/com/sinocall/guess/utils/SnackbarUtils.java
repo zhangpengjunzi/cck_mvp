@@ -816,7 +816,10 @@ public class SnackbarUtils {
     public static final int SNACK_TYPE_ERROR = 3;
 
     public static void showMyStyle(View view, String msg, int type) {
-        SnackbarUtils utils = Short(view, msg).gravityFrameLayout(Gravity.CENTER).messageCenter().margins(ScreenUtils.getScreenWidth(GuessApplication.getApplication())/4);
+        if(GuessApplication.getApplication()==null)return;//防止内存泄露
+        SnackbarUtils utils = Short(view, msg)
+                .gravityFrameLayout(Gravity.CENTER).messageCenter()
+                .margins(ScreenUtils.getScreenWidth(GuessApplication.getApplication())/5,0,ScreenUtils.getScreenWidth(GuessApplication.getApplication())/5,0);
         switch (type) {
             case SNACK_TYPE_CONFIM:
                 utils.confirm();

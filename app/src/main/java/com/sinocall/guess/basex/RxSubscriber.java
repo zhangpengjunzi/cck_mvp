@@ -3,6 +3,8 @@ package com.sinocall.guess.basex;
 import android.content.Context;
 import android.util.Log;
 
+import com.sinocall.guess.dialog.GuessLoadingDialog;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -48,6 +50,7 @@ public abstract class RxSubscriber<T> implements Observer<T> {
     @Override
     public void onComplete() {
         disposable.dispose();
+        GuessLoadingDialog.dismissLoadingDialog();
     }
 
     protected abstract void _onNext(T t);

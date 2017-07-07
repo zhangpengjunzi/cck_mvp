@@ -1,10 +1,12 @@
 package com.sinocall.guess.base;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/7/3.
  */
 
-public class BaseBean {
+public class BaseBean implements Serializable {
 
     /**
      * errorVo : {"code":"1000","msg":"发送成功"}
@@ -30,7 +32,7 @@ public class BaseBean {
         this.requestId = requestId;
     }
 
-    public static class ErrorVoBean {
+    public static class ErrorVoBean implements Serializable {
         /**
          * code : 1000
          * msg : 发送成功

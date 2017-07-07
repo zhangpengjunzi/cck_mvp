@@ -64,4 +64,6 @@ public abstract class BaseActivity<T extends BasePresenter,E extends BaseModel> 
     public abstract void initPresenter();
     //初始化view
     public abstract void initView();
+
+
 }
