@@ -61,6 +61,11 @@ public class GuessLoginPresenter extends GuessLoginContract.Presenter {
                     protected void _onError(String message) {
                         mView.showTip(message,SnackbarUtils.SNACK_TYPE_ERROR);
                     }
+
+                    @Override
+                    protected void _onSubscribe(Disposable disposable) {
+                        rxManager.add(disposable);
+                    }
                 });
     }
 
@@ -99,6 +104,11 @@ public class GuessLoginPresenter extends GuessLoginContract.Presenter {
                     @Override
                     protected void _onError(String message) {
                         mView.showTip(message,SnackbarUtils.SNACK_TYPE_ERROR);
+                    }
+
+                    @Override
+                    protected void _onSubscribe(Disposable disposable) {
+                        rxManager.add(disposable);
                     }
                 });
     }

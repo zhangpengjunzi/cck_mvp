@@ -143,5 +143,6 @@ public class GuessLoginActivity extends BaseActivity<GuessLoginPresenter,GuessLo
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.rxManager.clear();
     }
 }

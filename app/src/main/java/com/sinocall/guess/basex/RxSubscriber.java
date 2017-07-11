@@ -14,7 +14,6 @@ import io.reactivex.disposables.Disposable;
 
 public abstract class RxSubscriber<T> implements Observer<T> {
 
-    private Disposable disposable;
     private Context mContext;
 
     public RxSubscriber(Context context){
@@ -24,7 +23,7 @@ public abstract class RxSubscriber<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
-        disposable=d;
+        _onSubscribe(d);
     }
 
     @Override
@@ -49,11 +48,12 @@ public abstract class RxSubscriber<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-        disposable.dispose();
         GuessLoadingDialog.dismissLoadingDialog();
     }
 
     protected abstract void _onNext(T t);
 
     protected abstract void _onError(String message);
+
+    protected abstract void _onSubscribe(Disposable disposable);
 }

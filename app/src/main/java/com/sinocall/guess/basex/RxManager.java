@@ -6,6 +6,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -39,14 +40,14 @@ public class RxManager {
     }
 
 
-/*    *//**
+    /**
      * 单纯的Observables 和 Subscribers管理
      * @param m
-     *//*
+     */
     public void add(Disposable m) {
-        *//*订阅管理*//*
+        /*订阅管理*/
         mCompositeDisposable.add(m);
-    }*/
+    }
 
 
     /**
